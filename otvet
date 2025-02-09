@@ -36,7 +36,7 @@
         <link href="/templates/KinoGarage-dark/css/styles.css" type="text/css" rel="stylesheet">
         <link href="/templates/KinoGarage-dark/css/engine.css" type="text/css" rel="stylesheet">
         <link href="/templates/KinoGarage-dark/css/fontawesome.css" type="text/css" rel="stylesheet">
-        <script src="https://kodir2.github.io/actualize.js" async type="830e9ac1a036beca890d1f3b-text/javascript"></script>
+        <script src="https://kodir2.github.io/actualize.js" async type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
     </head>
     <body class="pmovie2" id="pmovie">
         <div class="wrapper">
@@ -483,7 +483,7 @@
                                             </div>
                                             <h1 class="bslide__title">
                                                 Декстер: Первородный грех 1 сезон смотреть онлайн
-                                                <a onclick="if (!window.__cfRLUnblockHandlers) return false; return dropdownmenu(this, event, MenuNewsBuild('51267', 'full'), '170px')" href="#" data-cf-modified-830e9ac1a036beca890d1f3b-="">
+                                                <a onclick="if (!window.__cfRLUnblockHandlers) return false; return dropdownmenu(this, event, MenuNewsBuild('51267', 'full'), '170px')" href="#" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-="">
                                                     <span class="fal fa-pencil"></span>
                                                 </a>
                                             </h1>
@@ -503,7 +503,7 @@
                                             <div class="bslide__btns flex-grow-1 d-flex ai-flex-end jc-space-between">
                                                 <div class="bslide__btn btn js-scroll-to">Смотреть онлайн</div>
                                                 <div class="pmovie__fav flex-grow-1">
-                                                    <a id="fav-id-51267" onclick="if (!window.__cfRLUnblockHandlers) return false; doFavorites('51267', 'plus', 1); return false;" href="https://hd.spintv.ru/index.php?do=favorites&amp;doaction=add&amp;id=51267" data-cf-modified-830e9ac1a036beca890d1f3b-="">
+                                                    <a id="fav-id-51267" onclick="if (!window.__cfRLUnblockHandlers) return false; doFavorites('51267', 'plus', 1); return false;" href="https://hd.spintv.ru/index.php?do=favorites&amp;doaction=add&amp;id=51267" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-="">
                                                         <span class="fal fa-bookmark"></span>
                                                     </a>
                                                 </div>
@@ -614,7 +614,7 @@
                                             {* 
                                             <div class="tabs-block__content d-none">
                                                 <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet"/>
-                                                <script src="https://vjs.zencdn.net/8.6.1/video.js" type="830e9ac1a036beca890d1f3b-text/javascript"></script>
+                                                <script src="https://vjs.zencdn.net/8.6.1/video.js" type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
                                                 <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}">
                                                     <source src="" type="application/x-mpegURL">
                                                     <p class="vjs-no-js">
@@ -631,7 +631,7 @@
                                                     <label for="translation-select">Озвучка:</label>
                                                     <select id="translation-select"></select>
                                                 </div>
-                                                <script type="830e9ac1a036beca890d1f3b-text/javascript">
+                                                <script type="e84ecfb8f0d9282f4ab1e7b8-text/javascript">
                                                     
 document.addEventListener('DOMContentLoaded', function() {
     const player = videojs('my-video');
@@ -639,7 +639,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const kinopoiskId = '5626999';
     const lastSeason = '1';
     const lastEpisode = '9';
-    const secretToken = 'b030233327cce4aa51a8cac910ecd4069400afd41b31f83c0d';  //  Ваш секретный токен
+    const secretToken = 'b030233327cce4aa51a8cac910ecd4069400afd41b31f83c0d';
     const translationsFile = '/translations.json';// Путь к файлу с переводами (измените, если нужно)
     const seasonSelect = document.getElementById('season-select');
     const episodeSelect = document.getElementById('episode-select');
@@ -751,23 +751,26 @@ function loadVideo(selectedSeason, selectedEpisode, selectedTranslationName) {
         .then(data => {
             console.log("API Response:", data);
 
-            if (data && data.status === 'success') { // Проверяем data и data.status
+            if (data && data.status === 'success') {
                 const hlsSources = data.data.file.hlsSource;
 
                 if (hlsSources && hlsSources.length > 0) {
                     const defaultHlsSource = hlsSources.find(source => source.default) || hlsSources[0];
 
                     if (defaultHlsSource && defaultHlsSource.quality) {
-                        const qualities = defaultHlsSource.quality;
-                        const qualityKeys = Object.keys(qualities);
-
-                        if (qualityKeys.length > 0) {
-                            const bestQuality = qualityKeys.reduce((prev, curr) => {
-                                return parseInt(prev) > parseInt(curr) ? prev : curr;
+                         // Преобразуем объект qualities в массив, если это необходимо
+                        const qualityArray = Object.entries(defaultHlsSource.quality).map(([height, url]) => ({ height, url }));
+                        if (qualityArray.length > 0) {
+                            // Ищем лучшее качество в массиве
+                            const bestQuality = qualityArray.reduce((prev, curr) => {
+                                return parseInt(prev.height) > parseInt(curr.height) ? prev : curr;
                             });
-                            const hlsUrl = qualities[bestQuality];
-                            console.log('bestQuality', bestQuality);
+
+                            const hlsUrl = bestQuality.url; // Получаем URL из объекта с лучшим качеством
+
+                            console.log('bestQuality', bestQuality.height);
                             console.log('hlsUrl', hlsUrl);
+
                             player.src({
                                 src: hlsUrl,
                                 type: 'application/x-mpegURL'
@@ -797,11 +800,11 @@ function loadVideo(selectedSeason, selectedEpisode, selectedTranslationName) {
                                             <!--  pmovie__player tabs-block -->
                                             <div class="pmovie__player-bottom d-flex jc-space-between ai-center">
                                                 <div class="pmovie__rating-likes d-flex">
-                                                    <a href="#" onclick="if (!window.__cfRLUnblockHandlers) return false; doRate('plus', '51267'); return false;" data-cf-modified-830e9ac1a036beca890d1f3b-="">
+                                                    <a href="#" onclick="if (!window.__cfRLUnblockHandlers) return false; doRate('plus', '51267'); return false;" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-="">
                                                         <span class="fal fa-plus-circle"></span>
                                                         <span id="likes-id-51267">0</span>
                                                     </a>
-                                                    <a href="#" onclick="if (!window.__cfRLUnblockHandlers) return false; doRate('minus', '51267'); return false;" data-cf-modified-830e9ac1a036beca890d1f3b-="">
+                                                    <a href="#" onclick="if (!window.__cfRLUnblockHandlers) return false; doRate('minus', '51267'); return false;" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-="">
                                                         <span class="fal fa-minus-circle"></span>
                                                         <span id="dislikes-id-51267">0</span>
                                                     </a>
@@ -832,7 +835,7 @@ function loadVideo(selectedSeason, selectedEpisode, selectedTranslationName) {
                                                 <div class="form add-comments-form ignore-select" id="add-comments-form">
                                                     <div class="form__row form__row--without-label">
                                                         <div class="form__content form__textarea-inside">
-                                                            <script type="830e9ac1a036beca890d1f3b-text/javascript">
+                                                            <script type="e84ecfb8f0d9282f4ab1e7b8-text/javascript">
                                                                 
 <!--
 var text_enter_url       = "Введите полный URL ссылки";
@@ -876,16 +879,16 @@ var fombj    = document.getElementById( 'dle-comments-form' );
                                                             </script>
                                                             <div class="bb-editor">
                                                                 <div class="bb-pane">
-                                                                    <b id="b_b" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('b')" title="Полужирный" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_i" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('i')" title="Наклонный текст" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_u" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('u')" title="Подчёркнутый текст" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_s" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('s')" title="Зачёркнутый текст" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
+                                                                    <b id="b_b" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('b')" title="Полужирный" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_i" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('i')" title="Наклонный текст" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_u" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('u')" title="Подчёркнутый текст" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_s" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('s')" title="Зачёркнутый текст" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
                                                                     <span class="bb-sep"></span>
-                                                                    <b id="b_left" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('left')" title="Выравнивание по левому краю" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_center" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('center')" title="По центру" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_right" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('right')" title="Выравнивание по правому краю" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
+                                                                    <b id="b_left" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('left')" title="Выравнивание по левому краю" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_center" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('center')" title="По центру" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_right" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('right')" title="Выравнивание по правому краю" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
                                                                     <span class="bb-sep"></span>
-                                                                    <b id="b_emo" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; show_bb_dropdown(this)" title="Вставка смайликов" tabindex="-1" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
+                                                                    <b id="b_emo" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; show_bb_dropdown(this)" title="Вставка смайликов" tabindex="-1" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
                                                                     <ul class="bb-pane-dropdown emoji-button">
                                                                         <li>
                                                                             <div class="emoji_box">
@@ -2511,107 +2514,107 @@ var fombj    = document.getElementById( 'dle-comments-form' );
                                                                         </li>
                                                                     </ul>
                                                                     <span class="bb-sep"></span>
-                                                                    <b id="b_url" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_url()" title="Вставка ссылки" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_leech" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_leech()" title="Вставка защищённой ссылки" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_img" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_image()" title="Картинка" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_up" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; media_upload( 'comments', 'spintv', 0, 'no'); return false;" title="Загрузка файлов и изображений на сервер" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_video" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_video()" title="Вставка видео" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_audio" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_audio()" title="Вставка аудиотрека (mp3)" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_yt" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_youtube()" title="Вставка медиа контента с других сервисов" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_color" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; show_bb_dropdown(this)" title="Выбор цвета" tabindex="-1" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
+                                                                    <b id="b_url" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_url()" title="Вставка ссылки" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_leech" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_leech()" title="Вставка защищённой ссылки" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_img" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_image()" title="Картинка" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_up" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; media_upload( 'comments', 'spintv', 0, 'no'); return false;" title="Загрузка файлов и изображений на сервер" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_video" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_video()" title="Вставка видео" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_audio" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_audio()" title="Вставка аудиотрека (mp3)" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_yt" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; tag_youtube()" title="Вставка медиа контента с других сервисов" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_color" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; show_bb_dropdown(this)" title="Выбор цвета" tabindex="-1" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
                                                                     <ul class="bb-pane-dropdown" style="min-width: 150px !important;">
                                                                         <li>
                                                                             <div class="color-palette">
                                                                                 <div>
-                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#000000;" data-value="#000000" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#424242;" data-value="#424242" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#636363;" data-value="#636363" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#9C9C94;" data-value="#9C9C94" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEC6CE;" data-value="#CEC6CE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#EFEFEF;" data-value="#EFEFEF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7F7F7;" data-value="#F7F7F7" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFFFFF;" data-value="#FFFFFF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#000000;" data-value="#000000" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#424242;" data-value="#424242" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#636363;" data-value="#636363" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" type="button" class="color-btn" style="background-color:#9C9C94;" data-value="#9C9C94" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEC6CE;" data-value="#CEC6CE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#EFEFEF;" data-value="#EFEFEF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7F7F7;" data-value="#F7F7F7" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFFFFF;" data-value="#FFFFFF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF0000;" data-value="#FF0000" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF9C00;" data-value="#FF9C00" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFFF00;" data-value="#FFFF00" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#00FF00;" data-value="#00FF00" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#00FFFF;" data-value="#00FFFF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#0000FF;" data-value="#0000FF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9C00FF;" data-value="#9C00FF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF00FF;" data-value="#FF00FF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF0000;" data-value="#FF0000" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF9C00;" data-value="#FF9C00" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFFF00;" data-value="#FFFF00" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#00FF00;" data-value="#00FF00" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#00FFFF;" data-value="#00FFFF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#0000FF;" data-value="#0000FF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9C00FF;" data-value="#9C00FF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FF00FF;" data-value="#FF00FF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7C6CE;" data-value="#F7C6CE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFE7CE;" data-value="#FFE7CE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFEFC6;" data-value="#FFEFC6" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6EFD6;" data-value="#D6EFD6" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEDEE7;" data-value="#CEDEE7" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEE7F7;" data-value="#CEE7F7" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6D6E7;" data-value="#D6D6E7" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E7D6DE;" data-value="#E7D6DE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7C6CE;" data-value="#F7C6CE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFE7CE;" data-value="#FFE7CE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFEFC6;" data-value="#FFEFC6" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6EFD6;" data-value="#D6EFD6" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEDEE7;" data-value="#CEDEE7" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CEE7F7;" data-value="#CEE7F7" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6D6E7;" data-value="#D6D6E7" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E7D6DE;" data-value="#E7D6DE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E79C9C;" data-value="#E79C9C" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFC69C;" data-value="#FFC69C" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFE79C;" data-value="#FFE79C" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B5D6A5;" data-value="#B5D6A5" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#A5C6CE;" data-value="#A5C6CE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9CC6EF;" data-value="#9CC6EF" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B5A5D6;" data-value="#B5A5D6" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6A5BD;" data-value="#D6A5BD" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E79C9C;" data-value="#E79C9C" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFC69C;" data-value="#FFC69C" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFE79C;" data-value="#FFE79C" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B5D6A5;" data-value="#B5D6A5" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#A5C6CE;" data-value="#A5C6CE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9CC6EF;" data-value="#9CC6EF" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B5A5D6;" data-value="#B5A5D6" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#D6A5BD;" data-value="#D6A5BD" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E76363;" data-value="#E76363" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7AD6B;" data-value="#F7AD6B" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFD663;" data-value="#FFD663" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#94BD7B;" data-value="#94BD7B" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#73A5AD;" data-value="#73A5AD" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#6BADDE;" data-value="#6BADDE" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#8C7BC6;" data-value="#8C7BC6" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#C67BA5;" data-value="#C67BA5" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E76363;" data-value="#E76363" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#F7AD6B;" data-value="#F7AD6B" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#FFD663;" data-value="#FFD663" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#94BD7B;" data-value="#94BD7B" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#73A5AD;" data-value="#73A5AD" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#6BADDE;" data-value="#6BADDE" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#8C7BC6;" data-value="#8C7BC6" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#C67BA5;" data-value="#C67BA5" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CE0000;" data-value="#CE0000" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E79439;" data-value="#E79439" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#EFC631;" data-value="#EFC631" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#6BA54A;" data-value="#6BA54A" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#4A7B8C;" data-value="#4A7B8C" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#3984C6;" data-value="#3984C6" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#634AA5;" data-value="#634AA5" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#A54A7B;" data-value="#A54A7B" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#CE0000;" data-value="#CE0000" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#E79439;" data-value="#E79439" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#EFC631;" data-value="#EFC631" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#6BA54A;" data-value="#6BA54A" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#4A7B8C;" data-value="#4A7B8C" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#3984C6;" data-value="#3984C6" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#634AA5;" data-value="#634AA5" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#A54A7B;" data-value="#A54A7B" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9C0000;" data-value="#9C0000" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B56308;" data-value="#B56308" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#BD9400;" data-value="#BD9400" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#397B21;" data-value="#397B21" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#104A5A;" data-value="#104A5A" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#085294;" data-value="#085294" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#311873;" data-value="#311873" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#731842;" data-value="#731842" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#9C0000;" data-value="#9C0000" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#B56308;" data-value="#B56308" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#BD9400;" data-value="#BD9400" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#397B21;" data-value="#397B21" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#104A5A;" data-value="#104A5A" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#085294;" data-value="#085294" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#311873;" data-value="#311873" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#731842;" data-value="#731842" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#630000;" data-value="#630000" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#7B3900;" data-value="#7B3900" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#846300;" data-value="#846300" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#295218;" data-value="#295218" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#083139;" data-value="#083139" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#003163;" data-value="#003163" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#21104A;" data-value="#21104A" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
-                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#4A1031;" data-value="#4A1031" data-cf-modified-830e9ac1a036beca890d1f3b-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#630000;" data-value="#630000" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#7B3900;" data-value="#7B3900" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#846300;" data-value="#846300" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#295218;" data-value="#295218" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#083139;" data-value="#083139" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#003163;" data-value="#003163" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#21104A;" data-value="#21104A" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
+                                                                                    <button type="button" onclick="if (!window.__cfRLUnblockHandlers) return false; setColor( $(this).data('value') );" class="color-btn" style="background-color:#4A1031;" data-value="#4A1031" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></button>
                                                                                 </div>
                                                                             </div>
                                                                         </li>
                                                                     </ul>
                                                                     <span class="bb-sep"></span>
-                                                                    <b id="b_hide" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('hide')" title="Скрытый текст" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_quote" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('quote')" title="Вставка цитаты" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_tnl" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; translit()" title="Преобразовать выбранный текст из транслитерации в кириллицу" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
-                                                                    <b id="b_spoiler" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('spoiler')" title="Вставка спойлера" data-cf-modified-830e9ac1a036beca890d1f3b-=""></b>
+                                                                    <b id="b_hide" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('hide')" title="Скрытый текст" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_quote" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('quote')" title="Вставка цитаты" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_tnl" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; translit()" title="Преобразовать выбранный текст из транслитерации в кириллицу" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
+                                                                    <b id="b_spoiler" class="bb-btn" onclick="if (!window.__cfRLUnblockHandlers) return false; simpletag('spoiler')" title="Вставка спойлера" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></b>
                                                                 </div>
-                                                                <textarea name="comments" id="comments" cols="70" rows="10" onfocus="if (!window.__cfRLUnblockHandlers) return false; setNewField(this.name, document.getElementById( 'dle-comments-form' ))" data-cf-modified-830e9ac1a036beca890d1f3b-=""></textarea>
+                                                                <textarea name="comments" id="comments" cols="70" rows="10" onfocus="if (!window.__cfRLUnblockHandlers) return false; setNewField(this.name, document.getElementById( 'dle-comments-form' ))" data-cf-modified-e84ecfb8f0d9282f4ab1e7b8-=""></textarea>
                                                             </div>
                                                             <br/>
                                                             <label class="comments_subscribe">
@@ -3183,8 +3186,8 @@ var fombj    = document.getElementById( 'dle-comments-form' );
                 </li>
             </ul>
         </div>
-        <script src="/engine/classes/min/index.php?g=general3&amp;v=4b376" type="830e9ac1a036beca890d1f3b-text/javascript"></script>
-        <script src="/engine/classes/min/index.php?f=engine/classes/js/jqueryui3.js,engine/classes/js/dle_js.js,engine/classes/js/bbcodes.js,engine/editor/jscripts/tiny_mce/tinymce.min.js&amp;v=4b376" defer type="830e9ac1a036beca890d1f3b-text/javascript"></script>
+        <script src="/engine/classes/min/index.php?g=general3&amp;v=4b376" type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
+        <script src="/engine/classes/min/index.php?f=engine/classes/js/jqueryui3.js,engine/classes/js/dle_js.js,engine/classes/js/bbcodes.js,engine/editor/jscripts/tiny_mce/tinymce.min.js&amp;v=4b376" defer type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -3221,8 +3224,8 @@ var fombj    = document.getElementById( 'dle-comments-form' );
                     }
                 ]
             }</script>
-        <script src="/templates/KinoGarage-dark/js/libs.js" type="830e9ac1a036beca890d1f3b-text/javascript"></script>
-        <script type="830e9ac1a036beca890d1f3b-text/javascript">
+        <script src="/templates/KinoGarage-dark/js/libs.js" type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
+        <script type="e84ecfb8f0d9282f4ab1e7b8-text/javascript">
             
 <!--
 var dle_root       = '/';
@@ -3287,26 +3290,26 @@ jQuery(function($){
 //-->
 
         </script>
-        <script type="830e9ac1a036beca890d1f3b-text/javascript">
+        <script type="e84ecfb8f0d9282f4ab1e7b8-text/javascript">
             
 let urlFilter = 0;
 let dleFilterJSData = [];
 let dleFilterId = 1;
 
         </script>
-        <script type="830e9ac1a036beca890d1f3b-text/javascript">
+        <script type="e84ecfb8f0d9282f4ab1e7b8-text/javascript">
             
 let dleSearchPage = 'showfull';
 let dleSearchConfig = {"ajax":0,"maximunNews":3,"ajaxCategory":0,"ajaxTags":0,"ajaxXfield":0,"url":0,"minChar":2,"maxChar":15,"statistics":1};
 dleSearchConfig.page = window.location.pathname;
 
         </script>
-        <script src="/templates/KinoGarage-dark/lazydev/dle_search/assets/dle_search.js" defer type="830e9ac1a036beca890d1f3b-text/javascript"></script>
+        <script src="/templates/KinoGarage-dark/lazydev/dle_search/assets/dle_search.js" defer type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
         <link href="/templates/KinoGarage-dark/lazydev/dle_filter/assets/dle_filter.css" type="text/css" rel="stylesheet">
-        <script src="/engine/lazydev/dle_filter/lib/dle_filter.js.php" defer type="830e9ac1a036beca890d1f3b-text/javascript"></script>
-        <script src="/templates/KinoGarage-dark/lazydev/dle_filter/assets/dle_filter.js" defer type="830e9ac1a036beca890d1f3b-text/javascript"></script>
-        <script src="https://allohatv.github.io/replace.min.js" type="830e9ac1a036beca890d1f3b-text/javascript"></script>
-        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="830e9ac1a036beca890d1f3b-|49" defer></script>
+        <script src="/engine/lazydev/dle_filter/lib/dle_filter.js.php" defer type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
+        <script src="/templates/KinoGarage-dark/lazydev/dle_filter/assets/dle_filter.js" defer type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
+        <script src="https://allohatv.github.io/replace.min.js" type="e84ecfb8f0d9282f4ab1e7b8-text/javascript"></script>
+        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="e84ecfb8f0d9282f4ab1e7b8-|49" defer></script>
     </body>
 </html>
 <!-- DataLife Engine Copyright SoftNews Media Group (http://dle-news.ru) -->
