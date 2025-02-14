@@ -1,0 +1,388 @@
+<article class="page ignore-select pmovie">
+    {include file="engine/lazydev/dle_youwatch/index.php?action=save"}
+<link rel="stylesheet" href="/style.css">
+    <header class="big-slider">
+        <div class="bslide d-flex img-fit-cover">
+            [not-smartphone]
+            <div class="bslide__poster img-fit-cover pmovie__poster">
+                [xfgiven_poster]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster]
+                [xfgiven_poster_img]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                <div class="bslide__label">[xfvalue_quality]</div>
+            </div>
+            [/not-smartphone]
+            <div class="bslide__desc flex-grow-1 d-flex fd-column">
+                <div class="bslide__cat pmovie__genres">[xfvalue_countries] [xfvalue_year] <b>Продолжительность [xfvalue_time]</b></div>
+                <h1 class="bslide__title">[xfvalue_title_ru] [xfvalue_season_type_2] смотреть онлайн[edit]<span class="fal fa-pencil"></span>[/edit]</h1>
+                <div class="bslide__subtitle">[xfvalue_slogan]</div>
+                [smartphone]
+                <div class="img-fit-cover pmovie__poster-hm d-none">
+                    [xfgiven_poster]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                    [xfgiven_poster_img]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                    <div class="bslide__label">[xfvalue_quality]</div>
+                </div>
+                [/smartphone]
+                <ul class="bslide__text pmovie__header-list">
+                    <li>
+                        <span>Режиссер:</span>
+                        [xfvalue_directors limit="30"]...
+                    </li>
+                    <li class="line-clamp">
+                        <span>Актеры:</span>
+                        [xfvalue_actors limit="70"]...
+                    </li>
+                </ul>
+                <div class="bslide__btns flex-grow-1 d-flex ai-flex-end jc-space-between">
+                    <div class="bslide__btn btn js-scroll-to">Смотреть онлайн</div>
+                    [group=5]
+                    <div class="pmovie__fav flex-grow-1"><a href="#" class="js-show-login"><span class="fal fa-bookmark"></span></a></div>[/group]
+                    [not-group=5]
+                    <div class="pmovie__fav flex-grow-1">
+                        [add-favorites]<span class="fal fa-bookmark"></span>[/add-favorites]
+                        [del-favorites]<span class="fal fa-minus-circle"></span>[/del-favorites]
+                    </div>
+                    [/not-group]
+                    <div class="pmovie__ratings d-flex ai-center">
+                        <div class="pmovie__ratings-caption">Рейтинг:</div>
+                        [rating-type-4]
+                        <div class="pmovie__rating pmovie__rating--site">
+                            <div class="pmovie__rating-content poster__rating"></div>
+                            <div class="pmovie__rating-caption js-count-rating">
+                                <div class="d-none">{rating}</div>{vote-num} [declination={vote-num}]голос||а|ов[/declination]
+                            </div>
+                        </div>[/rating-type-4]
+                        <div class="pmovie__rating pmovie__rating--kp">
+                            <div class="pmovie__rating-content">[xfvalue_rating_kp]</div>
+                            <div class="pmovie__rating-caption">Кинопоиск</div>
+                        </div>
+                        <div class="pmovie__rating pmovie__rating--imdb">
+                            <div class="pmovie__rating-content">[xfvalue_rating_imdb]</div>
+                            <div class="pmovie__rating-caption">IMDB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img src="" loading="lazy" alt="{title}" title="{title}" data-uwebp="true">
+            <div class="bslide__trailer js-show-trailer" data-trl="[xfvalue_trailer]">
+                <div class="fal fa-play anim" data-uwebp="true"></div>
+            </div>
+            [not-smartphone]<img src="" loading="lazy" alt="{title}" title="{title}" data-uwebp="true">[/not-smartphone]
+            [smartphone]<img src="" loading="lazy" alt="{title}" title="{title}" data-uwebp="true">[/smartphone]
+        </div>
+    </header>
+
+    <div class="page__cols d-flex">
+
+        <div class="page__col-left">
+
+            <ul class="pmovie__list">
+                <li>
+                    <div>Студия:</div>
+                    [xfvalue_production_companies_name limit="30"]...
+                </li>
+                <li class="not-shown-ajax">
+                    {* not-shown-ajax - это не отображается в окошке у постера *}
+                    <div>Жанры:</div>
+                    [xfvalue_genres]
+                </li>
+                <li>
+                    <div>Актеры:</div>
+                    [xfvalue_actors]
+                </li>
+            </ul>
+            <h2 class="page__subtitle">Скриншоты</h2>
+            [smartphone][banner_podpopulyar]{banner_podpopulyar}[/smartphone]
+            <div class="pmovie__screenshots">
+
+                {* поле скриншотов, подробнее в инструкции *}
+            </div>
+            [not-smartphone]
+            <div class="page__subtitle hm">Популярные фильмы</div>
+            <div class="pmovie__items hm">
+                {custom limit="3" days="30" order="rating" category="{category-id}" idexclude="{news-id}" template="custom-ftop"}
+            </div>
+            [banner_podpopulyar]{banner_podpopulyar}[/banner_podpopulyar]
+            [/not-smartphone]
+        </div>
+
+        <div class="page__col-right flex-grow-1">
+            <h2 class="page__subtitle">Сюжет "[xfvalue_title_ru]"</h2>
+            <div class="page__text full-text clearfix">{full-story}</div>
+            <h2 class="page__subtitle">"[xfvalue_title_ru]" смотреть онлайн [xfvalue_season_type_2] бесплатно в хорошем качестве</h2>
+            <div class="pmovie__player tabs-block">
+                <div class="pmovie__player-controls d-flex ai-center">
+                    <div class="tabs-block__select d-flex flex-grow-1">
+                        <span class="tab-link active" data-tab="main-player">Смотреть онлайн</span>
+                        <span class="tab-link" data-tab="additional-player" data-player="additional">Дополнительный плеер</span>
+                    </div>
+                    <div class="pmovie__complaint">
+                        [complaint]Не работает?[/complaint]
+                    </div>
+                </div>
+                <!--  Дополнительный плеер (iframe) - ОСТАВЛЯЕМ КАК ЕСТЬ -->
+                <div class="tabs-block__content d-none video-inside video-responsive">
+                    [xfgiven_kinopoisk_id]<iframe src="https://neck-as.allarknow.online:444/?kp=[xfvalue_kinopoisk_id]&token=39c0716ab27c425cbeb07719414b17" frameborder="0" scrolling="no" allowfullscreen="" width="800" height="452"></iframe>[/xfgiven_kinopoisk_id]
+                    [xfgiven_imdb_id]<iframe src="https://neck-as.allarknow.online:444/?imdb=[xfvalue_imdb_id]&token=39c0716ab27c425cbeb07719414b17" frameborder="0" scrolling="no" allowfullscreen="" width="800" height="452"></iframe>[/xfgiven_imdb_id]
+                </div>
+
+               {* <div class="tabs-block__content d-none">
+<link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/8.16.1/video.js"></script>
+
+<video id="my-video" class="video-js" controls preload="auto" width="800" height="452" data-setup="{}">
+    <source src="" type="application/x-mpegURL">
+    <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+</video>
+
+<div class="series-selector-container">
+    <div class="series-selector-item">
+        <label for="season-select">Сезон:</label>
+        <select id="season-select"></select>
+    </div>
+    <div class="series-selector-item">
+        <label for="episode-select">Эпизод:</label>
+        <select id="episode-select"></select>
+    </div>
+    <div class="series-selector-item">
+        <label for="translation-select">Озвучка:</label>
+        <select id="translation-select"></select>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const player = videojs('my-video');
+
+        const kinopoiskId = '[xfvalue_kinopoisk_id]';
+        const lastSeason = '[xfvalue_last_season]';
+        const lastEpisode = '[xfvalue_last_episode]';
+        const secretToken = 'b030233327cce4aa51a8cac910ecd4069400afd41b31f83c0d';
+        const translationsFile = 'https://hd.spintv.ru/translations.json'; // Путь к файлу с переводами (измените, если нужно)
+        const seasonSelect = document.getElementById('season-select');
+        const episodeSelect = document.getElementById('episode-select');
+        const translationSelect = document.getElementById('translation-select');
+
+        let translations = {}; // Переменная для хранения озвучек
+
+        // Функция для загрузки JSON
+        async function loadJSON(url) {
+            const response = await fetch(url);
+            return response.json();
+        }
+
+        // Функция для заполнения select option
+        function populateSelect(selectElement, start, end) {
+            if (selectElement) {
+                for (let i = start; i <= end; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    selectElement.appendChild(option);
+                }
+            } else {
+                console.warn('selectElement is null in populateSelect function.');
+            }
+        }
+        // Заполняем сезоны
+        if (lastSeason > 0) {
+            populateSelect(seasonSelect, 1, lastSeason);
+        } else {
+            seasonSelect.style.display = 'none';
+            document.querySelector('label[for="season-select"]').style.display = 'none';
+        }
+        // Заполняем эпизоды
+        if (lastEpisode > 0) {
+            populateSelect(episodeSelect, 1, lastEpisode);
+        } else {
+            episodeSelect.style.display = 'none';
+            document.querySelector('label[for="episode-select"]').style.display = 'none';
+        }
+        async function initializePlayer() {
+            try {
+                const translationsResponse = await fetch(translationsFile);
+                translations = await translationsResponse.json();
+
+                translationSelect.innerHTML = '<option value="">Выбрать озвучку</option>';
+
+                // Получаем список озвучек из [xfvalue_translator]
+                const translatorString = '[xfvalue_translator]';
+                const translatorsArray = translatorString.split(',').map(item => item.trim());
+
+                // Заполняем селектор озвучек только теми, что есть в [xfvalue_translator] и translations.json
+                translatorsArray.forEach(translator => {
+                    if (translations.hasOwnProperty(translator)) {
+                        const option = document.createElement('option');
+                        option.value = translator;
+                        option.textContent = translator;
+                        translationSelect.appendChild(option);
+                    }
+                });
+                seasonSelect.addEventListener('change', () => {
+                    loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
+                });
+
+                episodeSelect.addEventListener('change', () => {
+                    loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
+                });
+
+                translationSelect.addEventListener('change', () => {
+                    const selectedTranslationName = translationSelect.value;
+                    const translationId = translations[selectedTranslationName];
+                    loadVideo(seasonSelect.value, episodeSelect.value, translationId);
+                });
+            } catch (e) {
+                console.error(e);
+                alert("Возникла ошибка при загрузке. Обратитесь к администратору.");
+            }
+        }
+        // Изменена функция loadVideo
+        async function loadVideo(selectedSeason, selectedEpisode, translationId) {
+            console.log("loadVideo function called", selectedSeason, selectedEpisode, translationId);
+            if (!translationId) {
+                console.log("Озвучка не выбрана или ID не найден.");
+                player.src(''); // Очищаем источник видео
+                return;
+            }
+            const apiUrl = `/proxy.php?kp=${kinopoiskId}&season=${selectedSeason}&episode=${selectedEpisode}&translation=${translationId}`;
+            console.log("API URL:", apiUrl);
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("API Response:", data);
+                        console.log("hlsSources:", data.data.file.hlsSource);
+        console.log("data:", data);
+                if (data && data.status === 'success') {
+                    const hlsSources = data.data.file.hlsSource;
+                    if (hlsSources && hlsSources.length > 0) {
+                        const defaultHlsSource = hlsSources.find(source => source.default) || hlsSources[0];
+                        const qualityOptions = defaultHlsSource.quality;
+                        // Получаем список качеств
+                        const availableQualities = Object.keys(qualityOptions).map(quality => {
+                            return {
+                                label: quality,
+                                url: qualityOptions[quality]
+                            };
+                        });
+                        // Создаем выпадающий список, если больше 1 качества
+                        if (availableQualities.length > 1) {
+                            createQualitySelector(availableQualities);
+                            player.src({
+                                src: qualityOptions[availableQualities[0].label],
+                                type: 'application/x-mpegURL'
+                            });
+                            player.play();
+                        } else {
+                            // Если качество только одно
+                            player.src({
+                                src: qualityOptions[availableQualities[0].label],
+                                type: 'application/x-mpegURL'
+                            });
+                            player.play();
+                        }
+                    } else {
+                        alert('No HLS sources available.');
+                    }
+                } else {
+                    alert(`Ошибка: ${data ? data.message : 'Не удалось получить данные'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке видео:', error);
+                alert('Произошла ошибка при загрузке видео. Попробуйте позже.');
+            }
+        }
+
+        function createQualitySelector(qualities) {
+            // Создаем элемент select
+            const qualitySelector = document.createElement('select');
+            qualitySelector.className = 'vjs-quality-selector';
+            // Добавляем опции
+            qualities.forEach(quality => {
+                const option = document.createElement('option');
+                option.value = quality.url;
+                option.text = formatQualityLabel(quality.label); // Форматируем label
+                qualitySelector.appendChild(option);
+            });
+            // Обработчик изменения качества
+            qualitySelector.addEventListener('change', function() {
+                const selectedQuality = this.value;
+                console.log("selectedQuality:", selectedQuality)
+                // Меняем источник
+                player.src({
+                    src: selectedQuality,
+                    type: 'application/x-mpegURL'
+                });
+                // Запускаем воспроизведение
+                player.play();
+            });
+            // Добавляем выпадающий список в панель управления плеера
+            const controlBar = player.controlBar;
+            controlBar.el().appendChild(qualitySelector);
+        }
+        // Функция для форматирования названия качества
+        function formatQualityLabel(label) {
+            if (label.toLowerCase() === '2160p' || label.toLowerCase() === '4k') {
+                return '4K';
+            } else if (label.toLowerCase() === '1080p') {
+                return '1080p';
+            } else if (label.toLowerCase() === '720p') {
+                return '720p';
+            } else {
+                return label; // Оставляем как есть
+            }
+        }
+        initializePlayer();
+    });
+</script>
+                </div>
+                <!--  pmovie__player tabs-block -->
+                <div class="pmovie__player-bottom d-flex jc-space-between ai-center">
+                    [rating-type-4]
+                    <div class="pmovie__rating-likes d-flex">
+                        [rating-plus]<span class="fal fa-plus-circle"></span>{likes}[/rating-plus]
+                        [rating-minus]<span class="fal fa-minus-circle"></span>{dislikes}[/rating-minus]
+                    </div>
+                    [/rating-type-4]
+                    <div class="pmovie__share not-shown-ajax d-flex ai-center">
+                        <div class="page__subtitle">Поделиться:</div>
+                        <div class="ya-share2 not-loaded" data-services="vkontakte,facebook,odnoklassniki,viber,whatsapp,telegram" data-counter="ig"></div>
+                    </div>
+                </div>
+                <div class="page__caption">
+                    Люди, которые любят смотреть сериалы или просто поклонники сериалов, всегда в ожидании новой серий сериала, а иногда и вовсе ожидают новый сезон.
+                    Здесь собрана большая база телесериалов и легко можем конкурировать с таким гигантом онлайн сериалов, как seasonvar (Сезонныйвар), zetserial (зетсериал) или же HD Rezk (хдрезка).
+                    Все что захочешь. Доступны озвучки LostFilm, Cube in Cuba, AlexFilm и другие.
+                    На этой странице Вы можете <b>посмотреть сериал [xfvalue_title_ru]</b>!.
+                    Смотреть онлайн в хорошем качестве, со своего телефона на Android, iphone или пк в любое время.
+                </div>
+            </div>
+            <div class="page__comments">
+                <div class="page__comments-title">Комментарии</div>
+                <div class="page__comments-info">
+                    <span class="fal fa-exclamation-circle"></span>
+                    Минимальная длина комментария - 50 знаков. комментарии модерируются
+                </div>
+                {addcomments}
+                <div class="page__comments-list [not-comments]page__comments-list--not-comments[/not-comments]" id="page__comments-list">
+                    [not-comments]
+                    <div class="message-info">Комментариев еще нет. Вы можете стать первым!</div>[/not-comments]
+                    {comments}{navigation}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="sect pmovie__related">
+        <div class="sect__header d-flex ai-center">
+            <h2 class="sect__title flex-grow-1">Смотрите также <span>Только лучшие премьеры!</span></h2>
+        </div>
+        <div class="sect__content d-grid">
+            {related-news}
+        </div>
+    </section>
+</article>
