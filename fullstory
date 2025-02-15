@@ -1,13 +1,12 @@
 <article class="page ignore-select pmovie">
     {include file="engine/lazydev/dle_youwatch/index.php?action=save"}
-    <link rel="stylesheet" href="/style.css">
-    <link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+<link rel="stylesheet" href="/style.css">
     <header class="big-slider">
         <div class="bslide d-flex img-fit-cover">
             [not-smartphone]
             <div class="bslide__poster img-fit-cover pmovie__poster">
-                [xfgiven_poster]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster]
-                [xfgiven_poster_img]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                [xfgiven_poster]<img src="[xfvalue_poster]" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster]
+                [xfgiven_poster_img]<img src="[xfvalue_image_url_poster_img]" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
                 <div class="bslide__label">[xfvalue_quality]</div>
             </div>
             [/not-smartphone]
@@ -17,8 +16,8 @@
                 <div class="bslide__subtitle">[xfvalue_slogan]</div>
                 [smartphone]
                 <div class="img-fit-cover pmovie__poster-hm d-none">
-                    [xfgiven_poster]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
-                    [xfgiven_poster_img]<img src="" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                    [xfgiven_poster]<img src="[xfvalue_poster]" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
+                    [xfgiven_poster_img]<img src="[xfvalue_image_url_poster_img]" loading="lazy" alt="{title}" title="{title}">[/xfgiven_poster_img]
                     <div class="bslide__label">[xfvalue_quality]</div>
                 </div>
                 [/smartphone]
@@ -66,8 +65,8 @@
             <div class="bslide__trailer js-show-trailer" data-trl="[xfvalue_trailer]">
                 <div class="fal fa-play anim" data-uwebp="true"></div>
             </div>
-            [not-smartphone]<img src="" loading="lazy" alt="{title}" title="{title}" data-uwebp="true">[/not-smartphone]
-            [smartphone]<img src="" loading="lazy" alt="{title}" title="{title}" data-uwebp="true">[/smartphone]
+            [not-smartphone]<img src="{theme}/images/15.webp" loading="lazy" alt="{title}" title="{title}">[/not-smartphone]
+			[smartphone]<img src="{theme}/images/19.jpg" loading="lazy" alt="{title}" title="{title}">[/smartphone]
         </div>
     </header>
 
@@ -102,6 +101,7 @@
                 {custom limit="3" days="30" order="rating" category="{category-id}" idexclude="{news-id}" template="custom-ftop"}
             </div>
             [banner_podpopulyar]{banner_podpopulyar}[/banner_podpopulyar]
+            [/not-smartphone]
         </div>
 
         <div class="page__col-right flex-grow-1">
@@ -112,7 +112,9 @@
                 <div class="pmovie__player-controls d-flex ai-center">
                     <div class="tabs-block__select d-flex flex-grow-1">
                         <span class="tab-link active" data-tab="main-player">Смотреть онлайн</span>
-                        <span class="tab-link" data-tab="additional-player" data-player="additional">Дополнительный плеер</span>
+                        [group=1,6]
+  <span class="tab-link" data-tab="additional-player" data-player="additional">Дополнительный плеер</span>
+[/group]
                     </div>
                     <div class="pmovie__complaint">
                         [complaint]Не работает?[/complaint]
@@ -124,30 +126,220 @@
                     [xfgiven_imdb_id]<iframe src="https://neck-as.allarknow.online:444/?imdb=[xfvalue_imdb_id]&token=39c0716ab27c425cbeb07719414b17" frameborder="0" scrolling="no" allowfullscreen="" width="800" height="452"></iframe>[/xfgiven_imdb_id]
                 </div>
 
-                <div class="tabs-block__content d-none">
-                    <video id="my-video" class="video-js" controls preload="auto" width="800" height="452" data-setup="{}">
-                        <source src="" type="application/x-mpegURL">
-                        <p class="vjs-no-js">
-                            To view this video please enable JavaScript, and consider upgrading to a
-                            web browser that
-                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                        </p>
-                    </video>
+               {* <div class="tabs-block__content d-none">
+<link href="https://vjs.zencdn.net/8.16.1/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/8.16.1/video.js"></script>
 
-                    <div class="series-selector-container">
-                        <div class="series-selector-item">
-                            <label for="season-select">Сезон:</label>
-                            <select id="season-select"></select>
-                        </div>
-                        <div class="series-selector-item">
-                            <label for="episode-select">Эпизод:</label>
-                            <select id="episode-select"></select>
-                        </div>
-                        <div class="series-selector-item">
-                            <label for="translation-select">Озвучка:</label>
-                            <select id="translation-select"></select>
-                        </div>
-                    </div>
+<video id="my-video" class="video-js" controls preload="auto" width="800" height="452" data-setup="{}">
+    <source src="" type="application/x-mpegURL">
+    <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+</video>
+
+<div class="series-selector-container">
+    <div class="series-selector-item">
+        <label for="season-select">Сезон:</label>
+        <select id="season-select"></select>
+    </div>
+    <div class="series-selector-item">
+        <label for="episode-select">Эпизод:</label>
+        <select id="episode-select"></select>
+    </div>
+    <div class="series-selector-item">
+        <label for="translation-select">Озвучка:</label>
+        <select id="translation-select"></select>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const player = videojs('my-video');
+
+        const kinopoiskId = '[xfvalue_kinopoisk_id]';
+        const lastSeason = '[xfvalue_last_season]';
+        const lastEpisode = '[xfvalue_last_episode]';
+        const secretToken = 'b030233327cce4aa51a8cac910ecd4069400afd41b31f83c0d';
+        const translationsFile = 'https://hd.spintv.ru/translations.json'; // Путь к файлу с переводами (измените, если нужно)
+        const seasonSelect = document.getElementById('season-select');
+        const episodeSelect = document.getElementById('episode-select');
+        const translationSelect = document.getElementById('translation-select');
+
+        let translations = {}; // Переменная для хранения озвучек
+
+        // Функция для загрузки JSON
+        async function loadJSON(url) {
+            const response = await fetch(url);
+            return response.json();
+        }
+
+        // Функция для заполнения select option
+        function populateSelect(selectElement, start, end) {
+            if (selectElement) {
+                for (let i = start; i <= end; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    selectElement.appendChild(option);
+                }
+            } else {
+                console.warn('selectElement is null in populateSelect function.');
+            }
+        }
+        // Заполняем сезоны
+        if (lastSeason > 0) {
+            populateSelect(seasonSelect, 1, lastSeason);
+        } else {
+            seasonSelect.style.display = 'none';
+            document.querySelector('label[for="season-select"]').style.display = 'none';
+        }
+        // Заполняем эпизоды
+        if (lastEpisode > 0) {
+            populateSelect(episodeSelect, 1, lastEpisode);
+        } else {
+            episodeSelect.style.display = 'none';
+            document.querySelector('label[for="episode-select"]').style.display = 'none';
+        }
+        async function initializePlayer() {
+            try {
+                const translationsResponse = await fetch(translationsFile);
+                translations = await translationsResponse.json();
+
+                translationSelect.innerHTML = '<option value="">Выбрать озвучку</option>';
+
+                // Получаем список озвучек из [xfvalue_translator]
+                const translatorString = '[xfvalue_translator]';
+                const translatorsArray = translatorString.split(',').map(item => item.trim());
+
+                // Заполняем селектор озвучек только теми, что есть в [xfvalue_translator] и translations.json
+                translatorsArray.forEach(translator => {
+                    if (translations.hasOwnProperty(translator)) {
+                        const option = document.createElement('option');
+                        option.value = translator;
+                        option.textContent = translator;
+                        translationSelect.appendChild(option);
+                    }
+                });
+                seasonSelect.addEventListener('change', () => {
+                    loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
+                });
+
+                episodeSelect.addEventListener('change', () => {
+                    loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
+                });
+
+                translationSelect.addEventListener('change', () => {
+                    const selectedTranslationName = translationSelect.value;
+                    const translationId = translations[selectedTranslationName];
+                    loadVideo(seasonSelect.value, episodeSelect.value, translationId);
+                });
+            } catch (e) {
+                console.error(e);
+                alert("Возникла ошибка при загрузке. Обратитесь к администратору.");
+            }
+        }
+        // Изменена функция loadVideo
+        async function loadVideo(selectedSeason, selectedEpisode, translationId) {
+            console.log("loadVideo function called", selectedSeason, selectedEpisode, translationId);
+            if (!translationId) {
+                console.log("Озвучка не выбрана или ID не найден.");
+                player.src(''); // Очищаем источник видео
+                return;
+            }
+            const apiUrl = `/proxy.php?kp=${kinopoiskId}&season=${selectedSeason}&episode=${selectedEpisode}&translation=${translationId}`;
+            console.log("API URL:", apiUrl);
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("API Response:", data);
+                        console.log("hlsSources:", data.data.file.hlsSource);
+        console.log("data:", data);
+                if (data && data.status === 'success') {
+                    const hlsSources = data.data.file.hlsSource;
+                    if (hlsSources && hlsSources.length > 0) {
+                        const defaultHlsSource = hlsSources.find(source => source.default) || hlsSources[0];
+                        const qualityOptions = defaultHlsSource.quality;
+                        // Получаем список качеств
+                        const availableQualities = Object.keys(qualityOptions).map(quality => {
+                            return {
+                                label: quality,
+                                url: qualityOptions[quality]
+                            };
+                        });
+                        // Создаем выпадающий список, если больше 1 качества
+                        if (availableQualities.length > 1) {
+                            createQualitySelector(availableQualities);
+                            player.src({
+                                src: qualityOptions[availableQualities[0].label],
+                                type: 'application/x-mpegURL'
+                            });
+                            player.play();
+                        } else {
+                            // Если качество только одно
+                            player.src({
+                                src: qualityOptions[availableQualities[0].label],
+                                type: 'application/x-mpegURL'
+                            });
+                            player.play();
+                        }
+                    } else {
+                        alert('No HLS sources available.');
+                    }
+                } else {
+                    alert(`Ошибка: ${data ? data.message : 'Не удалось получить данные'}`);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке видео:', error);
+                alert('Произошла ошибка при загрузке видео. Попробуйте позже.');
+            }
+        }
+
+        function createQualitySelector(qualities) {
+            // Создаем элемент select
+            const qualitySelector = document.createElement('select');
+            qualitySelector.className = 'vjs-quality-selector';
+            // Добавляем опции
+            qualities.forEach(quality => {
+                const option = document.createElement('option');
+                option.value = quality.url;
+                option.text = formatQualityLabel(quality.label); // Форматируем label
+                qualitySelector.appendChild(option);
+            });
+            // Обработчик изменения качества
+            qualitySelector.addEventListener('change', function() {
+                const selectedQuality = this.value;
+                console.log("selectedQuality:", selectedQuality)
+                // Меняем источник
+                player.src({
+                    src: selectedQuality,
+                    type: 'application/x-mpegURL'
+                });
+                // Запускаем воспроизведение
+                player.play();
+            });
+            // Добавляем выпадающий список в панель управления плеера
+            const controlBar = player.controlBar;
+            controlBar.el().appendChild(qualitySelector);
+        }
+        // Функция для форматирования названия качества
+        function formatQualityLabel(label) {
+            if (label.toLowerCase() === '2160p' || label.toLowerCase() === '4k') {
+                return '4K';
+            } else if (label.toLowerCase() === '1080p') {
+                return '1080p';
+            } else if (label.toLowerCase() === '720p') {
+                return '720p';
+            } else {
+                return label; // Оставляем как есть
+            }
+        }
+        initializePlayer();
+    });
+</script>
                 </div>
                 <!--  pmovie__player tabs-block -->
                 <div class="pmovie__player-bottom d-flex jc-space-between ai-center">
@@ -195,171 +387,4 @@
             {related-news}
         </div>
     </section>
-    <script src="https://vjs.zencdn.net/8.16.1/video.js"></script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const player = videojs('my-video');
-
-    const kinopoiskId = '[xfvalue_kinopoisk_id]';
-    const lastSeason = '[xfvalue_last_season]';
-    const lastEpisode = '[xfvalue_last_episode]';
-    const secretToken = 'b030233327cce4aa51a8cac910ecd4069400afd41b31f83c0d';
-    const translationsFile = 'https://hd.spintv.ru/translations.json'; // Путь к файлу с переводами (измените, если нужно)
-    const seasonSelect = document.getElementById('season-select');
-    const episodeSelect = document.getElementById('episode-select');
-    const translationSelect = document.getElementById('translation-select');
-
-    let translations = {};  // Переменная для хранения озвучек
-    // let selectedTranslationName = "[xfvalue_translator]"; // Удалите эту строку
-
-    // Функция для загрузки JSON
-    async function loadJSON(url) {
-        const response = await fetch(url);
-        return response.json();
-    }
-
-    // Функция для заполнения select option
-    function populateSelect(selectElement, start, end) {
-        if (selectElement) {
-            for (let i = start; i <= end; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                selectElement.appendChild(option);
-            }
-        } else {
-            console.warn('selectElement is null in populateSelect function.');
-        }
-    }
-
-    // Заполняем сезоны
-    if (lastSeason > 0) {
-        populateSelect(seasonSelect, 1, lastSeason);
-    } else {
-        seasonSelect.style.display = 'none';
-        document.querySelector('label[for="season-select"]').style.display = 'none';
-    }
-
-    // Заполняем эпизоды
-    if (lastEpisode > 0) {
-        populateSelect(episodeSelect, 1, lastEpisode);
-    } else {
-        episodeSelect.style.display = 'none';
-        document.querySelector('label[for="episode-select"]').style.display = 'none';
-    }
-
-    async function initializePlayer() {
-        try {
-            translations = await loadJSON(translationsFile);  // Загружаем файл озвучек
-            console.log("translations:", translations)
-
-            // Получаем список озвучек из [xfvalue_translator]
-            const translatorString = '[xfvalue_translator]';
-            const translatorsArray = translatorString.split(',').map(item => item.trim());
-
-            // Очищаем текущие options
-            translationSelect.innerHTML = '<option value="">Выбрать озвучку</option>';
-
-            // Заполняем селектор озвучек только теми, что есть в [xfvalue_translator] и translations.json
-            translatorsArray.forEach(translator => {
-                if (translations.hasOwnProperty(translator)) {
-                    const option = document.createElement('option');
-                    option.value = translator;
-                    option.textContent = translator;
-                    translationSelect.appendChild(option);
-                }
-            });
-
-            // Обработчики событий
-            seasonSelect.addEventListener('change', function() {
-                loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
-            });
-
-            episodeSelect.addEventListener('change', function() {
-                loadVideo(seasonSelect.value, episodeSelect.value, translations[translationSelect.value]);
-            });
-
-            translationSelect.addEventListener('change', function() {
-                const selectedTranslationName = translationSelect.value;
-                const translationId = translations[selectedTranslationName];
-                loadVideo(seasonSelect.value, episodeSelect.value, translationId);
-            });
-
-        } catch (error) {
-            console.error('Ошибка при загрузке озвучек:', error);
-            alert('Не удалось загрузить озвучки');
-        }
-    }
-
-    function loadVideo(selectedSeason, selectedEpisode, selectedTranslationName) {
-        console.log("loadVideo function called", selectedSeason, selectedEpisode, selectedTranslationName);
-
-        if (!selectedTranslationName) {
-            console.log("Озвучка не выбрана.");
-            player.src(''); // Очищаем источник видео
-            return;
-        }
-        console.log('kp', kinopoiskId);
-
-        const apiUrl = `/proxy.php?kp=${kinopoiskId}&season=${selectedSeason}&episode=${selectedEpisode}&translation=${selectedTranslationName}`;
-        console.log("API URL:", apiUrl);
-
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    console.log("Ошибка при получении данных:", response.status);
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("API Response:", data);
-
-                if (data && data.status === 'success') {
-                    const hlsSources = data.data.file.hlsSource;
-
-                    if (hlsSources && hlsSources.length > 0) {
-                        const defaultHlsSource = hlsSources.find(source => source.default) || hlsSources[0];
-
-                        if (defaultHlsSource && defaultHlsSource.quality) {
-                            // Преобразуем объект qualities в массив, если это необходимо
-                            const qualityArray = Object.entries(defaultHlsSource.quality).map(([height, url]) => ({ height, url }));
-                            if (qualityArray.length > 0) {
-                                // Ищем лучшее качество в массиве
-                                const bestQuality = qualityArray.reduce((prev, curr) => {
-                                    return parseInt(prev.height) > parseInt(curr.height) ? prev : curr;
-                                });
-
-                                const hlsUrl = bestQuality.url; // Получаем URL из объекта с лучшим качеством
-
-                                console.log('bestQuality', bestQuality.height);
-                                console.log('hlsUrl', hlsUrl);
-
-                                player.src({
-                                    src: hlsUrl,
-                                    type: 'application/x-mpegURL'
-                                });
-                                player.play();
-                            } else {
-                                alert('No qualities available');
-                            }
-                        } else {
-                            alert('No qualities available for the default HLS source.');
-                        }
-                    } else {
-                        alert('No HLS sources available.');
-                    }
-                } else {
-                    alert(`Ошибка: ${data ? data.message : 'Не удалось получить данные'}`); // Выводим сообщение об ошибке, если есть
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка при получении данных:', error);
-                alert('Произошла ошибка при загрузке видео. Попробуйте позже.');
-            });
-    }
-    // Инициализация плеера после загрузки страницы
-    initializePlayer();
-});
-</script>
 </article>
